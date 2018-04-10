@@ -3,9 +3,8 @@
 > BDShop 
 
 ------------------------------------------------
-##交流QQ群:107304892
 
- **2017-10-03  半年第一次更新了 修复所有bug 请大家更新一下** 
+ **2018-10-03  半年第一次更新了 修复所有bug 请大家更新一下** 
 
 
 BDShop是国内少有前后端完全分离的java商城项目.
@@ -88,27 +87,6 @@ BDShop商城系统是B2C模式的电子商城
     12 后台管理：http://localhost:4865/page/manage_login.html
 
     13 管理员帐号：admin 密码：111111
-
-
-
-## BDShop 后端项目截图
-![商品列表](https://git.oschina.net/uploads/images/2017/0424/120936_4639108f_127930.png "商品列表")
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/121305_0af0cadc_127930.png "在这里输入图片标题")
-
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/121319_82d079a1_127930.png "在这里输入图片标题")
-## BDShop 前端项目截图
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/121753_bb301169_127930.png "在这里输入图片标题")
-
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/121915_65a1accd_127930.jpeg "在这里输入图片标题")
-
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/121956_2d6f6900_127930.jpeg "在这里输入图片标题")
-
-##捐赠 金额随意：
-![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/145453_3d03f160_127930.png "在这里输入图片标题")
-
-
-
-
 
 ```
 这里输入代码
