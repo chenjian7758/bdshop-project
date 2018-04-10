@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <title>收货地址</title>
+    <link href="/src/image/favicon.ico" type="image/x-icon" rel=icon>
+    <link href="/src/image/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link rel="stylesheet" href="/src/font/iconfont.css">
+    <link rel="stylesheet" href="/src/libs/weui.min.css">
+    <link rel="stylesheet" href="/src/libs/jquery-weui.min.css">
+    <!-- build:css -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- endbuild -->
+    <script id="script" src="/src/libs/require.min.js" defer async="true" require-module="./choice_address" data-main="/src/js/config.js"></script>
+    <style>
+        @media screen and (max-width: 320px) {
+            .address-list li .address-text {
+                width: 220px;
+            }
+        }
+
+        .address_list {
+            font-size: 16px;
+            color: #333;
+            background: #fff
+        }
+
+        .address_list .edit {
+            color: transparent;
+            width: 50px;
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            right: 0;
+            z-index: 2
+        }
+
+        .address_list .address {
+            position: relative;
+            overflow: hidden;
+            word-wrap: break-word;
+            word-break: break-all
+        }
+
+        .address_list ul {
+            padding: 15px;
+            padding-left: 40px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .address_list ul {
+            padding-right: 50px;
+            background-color: #fff;
+            z-index: 2
+        }
+
+        .address ul:before {
+            background-image: url(/src/image/un-choose.png);
+            background-repeat: no-repeat;
+            background-size: 15px 15px
+        }
+
+        .address ul.selected:before {
+            background-image: url(/src/image/choose.png);
+            background-repeat: no-repeat;
+            background-size: 15px 15px
+        }
+
+        .address_list .edit a {
+            color: transparent;
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .edit:after {
+            background-image: url(/src/image/edit.png);
+            background-repeat: no-repeat;
+            background-size: 20px 20px
+        }
+
+        .address_list .act {
+            background-color: #ff3b2f;
+            color: #fff;
+            width: 70px;
+            text-align: center;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1
+        }
+
+        .address_list .del {
+            height: 16px;
+            line-height: 16px;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 70px;
+            margin-top: -8px
+        }
+
+        .address_list .edit:after {
+            content: "\20";
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            margin-top: -10px;
+            left: 50%;
+            margin-left: -10px;
+        }
+
+        .address_list ul:before {
+            content: "\20";
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            margin-top: -10px;
+        }
+
+        .address_list ul.hidden:before {
+            display: none;
+        }
+        .address{
+            position: relative;
+        }
+        .address:after {
+            content: " ";
+            position: absolute;
+            z-index: 90;
+            left: 15px;
+            bottom: -1px;
+            right: 15px;
+            height: 1px;
+            border-bottom: 1px solid #d9d9d9;
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+        }
+
+</style>
+
+</head>
+
+<body class="white-body">
+<ul class="address_list" id="address-list">
+    <script type="text/html" id="address-list-tpl">
+        {{if obj==null}}
+        <p style="text-align: center;padding-top: 40px;color: #999;">暂无收货地址，请添加</p>
+        {{/if}}
+        {{each obj as value i}}
+
+        <div class="address" rid="{{value.receiveId}}">
+            <ul rid="{{value.receiveId}}" type="1" upgrade="0">
+                <li> {{value.receiveProvince}}{{value.receiveCity}}{{value.receiveCounty}} {{value.receiveAddress}}</li>
+                <li><strong>{{value.contact}}</strong> {{value.tel}}</li>
+                <li class="edit" adid={{value.receiveId}} type="1">编辑</li>
+            </ul>
+            <p class="act" rid="{{value.receiveId}}" type="1">
+                <span class="del"><i class="iconfont icon-delete"></i></span>
+            </p>
+        </div>
+        {{/each}}
+    </script>
+</ul>
+<a href="javascript:void(0);" class="add weui-btn weui-btn_primary" style="width:90%;margin-top:50px;background: #2BC17A;">添加</a>
+</body>
+
+</html>

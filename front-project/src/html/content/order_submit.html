@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta http-equiv="Expires" CONTENT="0">
+    <meta http-equiv="Cache-Control" CONTENT="no-cache">
+    <meta http-equiv="Pragma" CONTENT="no-cache">
+    <title>提交订单</title>
+    <link rel="stylesheet" href="/src/libs/weui.min.css">
+    <link rel="stylesheet" href="/src/libs/jquery-weui.min.css">
+    <link rel="stylesheet" href="/src/libs/bootstrap-datetimepicker.min.css">
+    <link href="/src/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/src/libs/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/src/libs/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="/src/libs/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script id="script" src="/src/libs/require.min.js" defer async="true" require-module="./order_submit"
+            data-main="/src/js/config.js"></script>
+    <style>
+        body {
+
+            margin: 0 auto;
+            min-width: 320px;
+            max-width: 540px;
+            background: #fff;
+            font-size: 14px;
+            font-family: -apple-system, Helvetica, sans-serif;
+            line-height: 1.5;
+            color: #666;
+            -webkit-text-size-adjust: 100% !important;
+        }
+
+        strong {
+            color: #333;
+            font-weight: 500;
+            font-family: -apple-system-font, '微软雅黑', Helvetica, sans-serif;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .address-choose-bar {
+            margin-top: 0;
+        }
+
+        .pay-method-label:before {
+            right: 15px;
+        }
+
+        .goods-bought-list:before {
+            border-top: none;
+        }
+
+        .goods-bought-box:before {
+            top: 40px;
+            left: 15px;
+            right: 15px;
+        }
+
+        .goods-bought-box:after {
+            left: 15px;
+            right: 15px;
+        }
+
+        .infact-pay:before {
+            right: 15px;
+        }
+
+        .remarks-detail:before {
+            top: 36px;
+            left: 15px;
+            right: 15px;
+        }
+
+        .datetimepicker-days {
+            width: 100%
+        }
+
+        .datetimepicker-inline {
+            width: 100%
+        }
+
+        .table-condensed {
+            width: 100%
+        }
+
+        a:focus, a:hover {
+            text-decoration: none;
+        }
+
+        a:focus p, a:hover p {
+            color: #333;
+        }
+
+        body {
+            background-color: #f8f8f8;
+        }
+
+        .order_info {
+            margin-top: 5px;
+            margin-bottom: 15px;
+            padding: 0 10px;
+            background: #fff;
+            position: relative
+        }
+
+        .order_shopBar {
+            display: block;
+            position: relative;
+            height: 40px;
+            line-height: 40px;
+            font-size: 15px
+        }
+
+        .buy_checkout {
+            position: relative;
+            background: #fff;
+            margin-bottom: 15px
+        }
+
+        .buy_checkout li {
+            position: relative;
+            overflow: hidden
+        }
+
+        .buy_checkout p:after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            pointer-events: none;
+            background-color: #cbcbcb;
+            height: 1px;
+            left: 0;
+            right: 0;
+            bottom: 0
+        }
+
+        .buy_checkout p {
+            padding: 12px 10px 12px 75px;
+            position: relative;
+            box-sizing: border-box
+        }
+
+        .buy_checkout .tit {
+            width: 65px;
+            line-height: 1;
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            margin: auto 0;
+            padding-right: 20px;
+            text-align: right;
+            font-size: 14px;
+            color: #333
+        }
+
+        .buy_checkout .tit2 {
+            width: 105px;
+            line-height: 1;
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            margin: auto 0;
+            padding-right: 20px;
+            text-align: right;
+            font-size: 14px;
+            color: #333
+        }
+
+        .buy_checkout input {
+            height: 20px;
+            line-height: normal;
+            border: 0 none;
+            font-size: 14px;
+            width: 100%;
+            -webkit-appearance: none;
+            vertical-align: top;
+            color: #333
+        }
+
+        .row_1, .row_2 {
+            margin: 10px 0;
+        }
+
+        .row_1 li {
+            color: #333;
+            font-size: 13px;
+        }
+
+        .row_1:after {
+            content: "";
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-top: 1px solid #666;
+            border-left: 1px solid #666;
+            -webkit-transform-origin: 50%;
+            transform-origin: 50%;
+            -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            margin-top: -4px
+        }
+
+        .weui-tabbar {
+            height: 49px;
+            position: fixed;
+            z-index: 900;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            max-width: 540px
+        }
+
+        .amount p {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            padding: 6px 0;
+            position: relative
+        }
+
+        #order-amount2 p {
+            display: block;
+            font-size: 14px;
+            text-align: right;
+            color: #333;
+            padding: 6px 0;
+            position: relative
+        }
+
+        .order-amount2:after {
+            content: " ";
+            top: 50%;
+            border-top: 1px solid #d9d9d9;
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            color: #d9d9d9;
+            border-top: 1px solid #d9d9d9;
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-transform: scaleY(.5);
+            transform: scaleY(.5)
+        }
+
+        #order-payment ul:before {
+            background-image: url(/src/image/un-choose.png);
+            background-repeat: no-repeat;
+            background-size: 15px 15px
+        }
+
+        #order-payment ul {
+            padding: 15px 40px;
+            position: relative;
+            overflow: hidden;
+            padding-right: 50px;
+            background-color: #fff;
+            z-index: 2
+        }
+
+        .row_6:after {
+            content: "";
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-bottom:none;
+            border-left: none;
+            border-top: 1px solid #666;
+            border-right: 1px solid #666;
+            -webkit-transform-origin: 50%;
+            transform-origin: 50%;
+            -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            margin-top: -5px
+        }
+        .shopShow .row_6:after{
+            content: "";
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-bottom: 1px solid #666;
+            border-left: 1px solid #666;
+            border-right: none;
+            border-top: none;
+            -webkit-transform-origin: 50%;
+            transform-origin: 50%;
+            -webkit-transform: rotate(135deg);
+            transform: rotate(135deg);
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            margin-top: -5px
+
+        }
+        #order-goods {
+            display: none;
+        }
+        .shopShow #order-goods{
+            display: block;
+        }
+
+    </style>
+</head>
+<body class="grey-body" ontouchstart>
+<div id="dialogDetail" class="modal fade">
+    <div id="datetimepicker" style="background: white;height: 100%;width: 100%;float: left;">
+    </div>
+</div>
+<div class="page">
+    <div class="page__bd">
+        <div class="weui-tab__panel">
+            <form id="order-submit-box">
+                <div class="order_info">
+                    <div class="order_shopBar">
+                        <strong>配送地址</strong>
+                    </div>
+                    <div id="order-address">
+                    </div>
+
+
+                </div>
+                <div class="order_info">
+                    <div class="order_shopBar">
+                        <strong>付款方式</strong>
+                    </div>
+                    <div class="weui-cells_radio" id="order-payment"></div>
+
+
+                </div>
+                <div class="order_info" id="addSendTime">
+                    <div class="weui-cells">
+                        <ul class="row_1">
+                            <li>
+                                <label for="showSendTime" style="font-weight: 500;font-size: 15px">配送时间:</label>
+                                <input style="border: 0;width: 70%" type="text" id="showSendTime"/>
+                                <input type="hidden" name="sendTime" id="sendTime"/>
+                            </li>
+                            <li>
+                                <p style="color: #FE7E6B;margin-bottom: 0;">当日17:00前下单次日11:00前送达</p>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+                <div class="order_info">
+                    <div class="order_shopBar shopTip">
+                        <strong style="clear: both">所购商品</strong>
+                        <span id="allcount" style="float: right;margin-right: 30px;color: #FE7E6B;font-size: 14px"></span>
+                        <i class="row_6"></i>
+                    </div>
+                    <div id="order-goods">
+                    </div>
+
+                </div>
+                <div class="order_info">
+                    <div class="weui-cells">
+                        <ul class="row_2">
+                            <li id="order-amount" class="amount">
+
+                            </li>
+                            <li id="order-amount2" class="order-amount2">
+
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+                <div class="order_info">
+                    <div class="weui-cells">
+                        <ul class="row_2">
+                            <li class="amount">
+                                <p>
+                                    <span>备注:</span> <input id="comment" type="text" name="comment" style="border: none;width: 80%;outline: none">
+                                </p>
+
+                            </li>
+                            <li class="amount order-amount2">
+                                <p>
+                                    <span>是否开发票:</span> <input type="radio" checked value="1" name="invoiceTag"/>是&nbsp;&nbsp;<input type="radio" value="0"
+                                                                                                                                     name="invoiceTag"/>否
+                                </p>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+<div class="weui-tabbar">
+    <div class="weui-cell__ft" style="width: 50%; float: left; text-align: center;">
+        <div class="weui-cell" id="order-amount3" style="padding: 14px 15px;">
+        </div>
+        <script type="text/html" id="order-amount3-tpl">
+            <p style="float: left; text-align: center;font-weight: normal;font-size: 14px;margin: 0;color: #333;">
+                合计：&nbsp;<label style="color: #FEA395;font-weight: normal;font-size: 16px;margin-bottom: 0;">¥ <span
+                    id="total-money">{{obj.needPayAmount/100}}</span></label>
+            </p>
+        </script>
+    </div>
+    <div style="float:right;width:50%;background-color: #2CC17B;">
+        <a href="javascript:void (0);" style=" height: 49px;color:#FFFFFF" class="weui-btn" id="order_submit">提交订单</a>
+    </div>
+</div>
+<script type="text/html" id="order-address-tpl">
+
+
+    <div class="weui-cells address-choose-bar">
+        {{if obj!=null}}
+        <a href="choice_address.html?rid={{obj.receiveId}}">
+            <div class="weui-cell__bd">                
+                <input type="hidden" name="receive.receiveId" value="{{obj.receiveId}}">
+                <ul class="row_1">
+                    <li><strong>{{obj.contact}}</strong>&nbsp;{{obj.tel}}</li>
+                    <li>
+                        {{obj.receiveProvince }}&nbsp;
+                        {{obj.receiveCity}}&nbsp;{{obj.receiveCounty}}&nbsp; {{obj.receiveAddress}}
+
+                    </li>
+                </ul>
+                {{/if}}
+                {{if obj ==null}}
+                <a href="choice_address.html">
+                <div class="weui-cell__bd">
+                <p><span style="color:#FE7E6B;">暂无配送地址,请添加</span></p>
+                {{/if}}
+            </div>
+            <div class="weui-cell__ft">
+            </div>
+        </a>
+    </div>
+
+
+</script>
+<script type="text/html" id="order-payment-tpl">
+    {{each obj as value i}}
+
+    <label style="padding:8px 15px; " class="weui-cell weui-check__label" for="pay_{{value.paymentId}}">
+
+        <div class="weui-cell__bd">
+            <p style="font-weight: 500; margin:0px">{{value.name}}</p>
+        </div>
+        <div class="weui-cell__ft">
+            <input type="radio" name="payment.paymentId" class="weui-check payStyle" id="pay_{{value.paymentId}}" {{if value.paymentId==2}} checked="checked" {{/if}}
+            value="{{value.paymentId}}">
+            <span class="weui-icon-checked"></span>
+        </div>
+    </label>
+    {{/each}}
+</script>
+<script type="text/html" id="order-goods-tpl">
+    {{each obj.shoppingCartItem as value i}}
+    <label class="weui-check__label goods-bought-list"
+           style="font-weight: normal;margin-bottom: 0;padding-top: 5px;padding-bottom: 5px;color: #666;">
+        <div class="weui-cell__bd">
+            <input type="hidden" name="orderDetailsList[{{i}}].goodsId" value="{{value.goods.goodsId}}"/>
+            <input type="hidden" name="orderDetailsList[{{i}}].priceId" value="{{value.goodsPrice.priceId}}"/>
+            <input type="hidden" name="orderDetailsList[{{i}}].num" value="{{value.quantity}}"/>
+            <p style="color: #333;float: left;margin-bottom: 0;">{{value.goods.goodsName}}&nbsp;（{{value.goodsPrice.unitName}}）X{{value.quantity}}</p>
+        </div>
+    </label>
+    {{/each}}
+</script>
+<script type="text/html" id="order-amount-tpl">
+    <p style="color: #07141e;font-weight: normal;margin-bottom: 0;">
+        <span style="color: #07141e;">总计：</span>
+        <span style="float: right;">¥ {{obj.totalAmount/100}}</span>
+    </p>
+</script>
+<script type="text/html" id="order-amount2-tpl">
+    <p style="color: #07141e;font-weight: normal;margin-bottom: 0;">
+        <span>实付：</span>
+        <span style="color: #FEA395;">¥ {{obj.needPayAmount/100}}</span>
+    </p>
+</script>
+<script type="text/html" id="shop-allcount-tpl">
+ {{num}}件
+</script>
+
+</body>
+
+</html>

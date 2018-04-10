@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>收货地址</title>
+    <link href="/src/image/favicon.ico" type="image/x-icon" rel=icon>
+    <link href="/src/image/favicon.ico" type="image/x-icon" rel="shortcut icon">
+
+    <link rel="stylesheet" href="/src/font/iconfont.css">
+    <link rel="stylesheet" href="/src/libs/weui.min.css">
+    <link rel="stylesheet" href="/src/libs/jquery-weui.min.css">
+    <!-- build:css -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- endbuild -->
+    <script id="script" src="/src/libs/require.min.js" defer async="true" require-module="./add_address" data-main="/src/js/config.js"></script>
+    <style>
+        * {
+            font-family: -apple-system-font, "Helvetica Neue", Helvetica, sans-serif!important;
+        }
+        label>*{
+            pointer-events: auto;
+        }
+        .address_new p {
+            padding: 12px 10px 12px 95px;
+            position: relative;
+            box-sizing: border-box
+        }
+        .address_new label{
+            display: block;
+        }
+        .address_new .tit{
+            width: 78px;
+            line-height: 1;
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            margin: auto 0;
+            padding-right: 20px;
+            text-align: right;
+            font-size: 16px;
+            color: #333;
+        }
+        .address_new input{
+            height: 20px;
+            line-height: normal;
+            border: 0 none;
+            font-size: 16px;
+            width: 100%;
+            -webkit-appearance: none;
+            vertical-align: top;
+            color: #333;
+        }
+        .address_new p:after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            pointer-events: none;
+            background-color: #cbcbcb;
+            height: 1px;
+            left: 15px;
+            right: 15px;
+            bottom: 0
+        }
+        .address_new textarea{
+            -webkit-appearance: none;
+            width: 100%;
+            border: none;
+            resize: none;
+            font-size: 16px;
+        }
+        .address_new p.street_detail textarea{
+            line-height: 1.5;
+        }
+        .address_new p.street_detail .close{
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 35px;
+            height: 44px;
+        }
+        .address_new p.street_detail .btn_complete{
+            display: none;
+            position: absolute;
+            top: 1px;
+            right: -48px;
+            padding: 0 10px;
+            height: 44px;
+            line-height: 44px;
+            font-size: 16px;
+        }
+        .address_new .tips{
+            margin-top: 5px;
+            font-size: 14px;
+            color: #aaa;
+            display: block;
+
+        }
+        .mod_btns{
+            overflow: hidden;
+            margin: 15px 10px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+        }
+        .mod_btns .mod_btn{
+            display: block;
+            box-sizing: border-box;
+            width: 100px;
+            height: 44px;
+            line-height: 42px;
+            text-align: center;
+            /*font-size: 14px;*/
+            border-radius: 2px;
+            position: relative;
+            width: 100%;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1
+        }
+        .mod_btns .mod_btn.bg_2{
+            background-color: #2BC17A;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <form class="address_new weui-cells_form add-address-form" id="add-address-box">
+        <p>
+            <label for="">
+                <span class="tit">收货人</span>
+                <input name="contact" id="userName" type="text" value="" placeholder="姓名"></label>
+        </p>
+        <p>
+            <label for="">
+                <span class="tit">联系方式</span>
+                <input id="phone" value="" type="tel" placeholder="手机号码" name="tel"></label>
+        </p>
+        <p>
+            <label for="">
+                <span class="tit">所在地区</span>
+                <input id="city-picker" readonly value="" type="text" placeholder="">
+            </label>
+            <input type="hidden" id="receiveProvince" name="receiveProvince">
+            <input type="hidden" id="receiveCity"      name="receiveCity">
+            <input type="hidden" id="receiveCounty"   name="receiveCounty">
+        </p>
+        <p class="street_detail" id="adinfoP">
+            <label for="">
+                <span class="tit">详细地址</span>
+                <textarea name="receiveAddress" placeholder="街道地址" id="address"  value="" rows="2">
+
+                </textarea>
+                <i class="close" id="info_clear"></i>
+            </label>
+            <span class="tips">详细地址需填写楼栋楼层或房间号信息</span>
+        </p>
+        <div class="mod_btns"> <a href="javascript:void(0);" class="mod_btn bg_2" id="submitAddress">确认</a> </div>
+       <!-- <script type="text/html" id="add-address-tpl">
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">收货人：</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" id="userName" value="{{contact}}" name="contact" placeholder="姓名">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">联系方式：</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="tel" id="phone" value="{{tel}}" name="tel" placeholder="收货人手机">
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">所在地区：</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input class="weui-input" type="text" id='city-picker'  value="{{receiveProvince}} {{receiveCity}} {{receiveCounty}}">
+                </div>
+                <input type="hidden" id="receiveProvince" name="receiveProvince">
+                <input type="hidden" id="receiveCity"      name="receiveCity">
+                <input type="hidden" id="receiveCounty"   name="receiveCounty">
+            </div>
+            <div class="weui-cells">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd">
+                        <label for="" class="weui-label">详细地址：</label>
+                    </div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" type="text" id="address" value="{{receiveAddress}}" name="receiveAddress" placeholder="楼道，楼牌号等">
+                    </div>
+                </div>
+            </div>
+            <div class="weui-cells btn-box">
+                <a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" id="save-btn" style="font-size:0.75rem;padding:0 2em;background: #2BC17A;">保存</a>
+            </div>
+        </script>-->
+    </form>
+</body>
+
+</html>

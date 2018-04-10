@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <title>订单统计</title>
+    <link rel="stylesheet" href="/src/font/iconfont.css">
+    <link rel="stylesheet" href="/src/libs/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/manage.css">
+    <script id="script" src="/src/libs/require.min.js" defer async="true" require-module="./manage_order_report"
+            data-main="/src/js/config.js"></script>
+    <script type="text/javascript" src="/src/font/jedate.js">
+    </script>
+    <!--[if lt IE 9]>
+    <script src="/lib/html5shiv.min.js"></script>
+    <script src="/lib/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .td{border:solid #add9c0; border-width:0px 1px 1px 0px; padding:10px 0px;}
+        .table{border:solid #add9c0; border-width:1px 0px 0px 1px;}
+        .datainp{ width:60px; height:30px; border:1px #ccc solid;}
+        .datep{ margin-bottom:1px;}
+        body{
+            line-height: 25px;
+        }
+    </style>
+</head>
+
+<body>
+<!--include "../public/manage_sidebar.html"-->
+<!--include "../public/manage_header.html"-->
+<div class="container-wrap">
+    <div class="bread-nav clearfix p-l-lg">
+        <ol class="fl">
+            <li class="fl active text-333 text-basic"><a href="javascript:void(0);">订单统计</a></li>
+        </ol>
+    </div>
+    <div class="row">
+        <div class="m-r-lg m-l-lg">
+            <div class="table-responsive">
+                <div style="background-color:#299FA3;width: 100%;position: relative;margin-top: 20px;" class="clearfix">
+                    <div style="float:left;width:30%;background-color:#299FA3;text-align:center;color: #fff;padding: 30px 0;" >
+                        <label style="font-size:18px;">￥</label><label id="totalAmount" style="font-size:26px;"></label>
+                        <br/>
+                        <label style="font-size:16px;font-weight: normal;">订单总数&nbsp;</label><label id="totalCount" style="font-size:26px;">（100个）</label>
+                    </div>
+                    <div style="float:left;width:30%;color: #fff;background-color:#299FA3;text-align:center;color: #fff;padding: 30px 0;">
+                        <label style="font-size:18px;">￥</label><label id="paidOrderAmount" style="font-size:26px;">1234.00 </label>
+                        <br/>
+                        <label style="font-size:16px;font-weight: normal;">已付款订单&nbsp;</label><label id="paidOrderCount" style="font-size:26px;">（50个） </label>
+                    </div>
+                    <div style="float:left;width:30%;color: #fff;background-color:#299FA3;text-align:center;color: #fff;padding: 30px 0;">
+                        <label style="font-size:18px;">￥</label><label id="noPaidOrderAmount" style="font-size:26px;">1234.00 </label>
+                        <br/>
+                        <label style="font-size:16px;font-weight: normal;">未付款订单&nbsp;</label><label id="noPaidOrderCount" style="font-size:26px;">（10个） </label>
+                    </div>
+                    <div style="position: absolute;left: 30%;top: 15px;width: 1px ;height: 60px;background: #fff;"></div>
+                    <div style="position: absolute;left: 60%;top: 15px;width: 1px ;height: 60px;background: #fff;"></div>
+				</div>
+                <div style="padding-bottom: 40px;" class="clearfix">
+                     <div id="container" style="height:200px;float: left;width: 50%"></div>
+                     <div id="container2" style="height: 200px;float: right;width: 50%"></div>
+                </div>                
+                <table class="table table-hover m-t-xxl p-t-lg" style="margin-top: 20px;padding-top: 20px;">
+                    <thead>
+                    <tr>
+                        <th class="font-normal text-basic">编号</th>
+                        <th class="font-normal text-basic">订单号</th>
+                        <th class="font-normal text-basic">下单时间</th>
+                        <th class="font-normal text-basic">订单金额</th>
+                        <th class="font-normal text-basic">会员手机</th>
+                        <th class="font-normal text-basic">是否开发票</th>
+                        <th class="font-normal text-basic">付款方式</th>
+                        <th class="font-normal text-basic">支付状况</th>
+                        <th class="font-normal text-basic">配送状态</th>
+                        <th class="font-normal text-basic">操作</th>
+                    </tr>
+                    <tr>
+                        <form class="form-horizontal p-t-lg" id="form-box">
+                            <th class="font-normal text-basic td" ></th>
+
+                            <th class="font-normal text-basic td" >
+                                <input type="text" id="orderNumber" name="orderNumber" class="form-control" value="">
+                            </th>
+                            <th class="font-normal text-basic td" >
+                                <div>
+                                    <input type="text" id="startTime" name="startTime" class="datainp" value="" placeholder="开始日期" readonly>--
+                                    <input type="text" id="endTime" name="endTime" class="datainp" value="" placeholder="结束日期"  readonly>
+                                </div>
+                            </th>
+                            <th class="font-normal text-basic td" >
+                                ----
+                            </th>
+                            <th class="font-normal text-basic td" >
+                                <input type="text" id="userPhone" name="userPhone" class="form-control" value="" onkeyup="value=value.replace(/[^\d{1,}\.\d{1,}|\d{1,}]/g,'')">
+                            </th>
+                            <th class="font-normal text-basic td" >
+                                <select  id="invoiceTag" >
+                                    <option  value="">全部</option>
+                                    <option  value="1">是</option>
+                                    <option  value="0">否</option>
+                                </select>
+                            </th>
+                            <th class="font-normal text-basic td" >
+                                <select id="paymentId" >
+                                    <option  value="">全部</option>
+                                    <option  value="3">累计付款</option>
+                                    <option  value="2">在线支付</option>
+                                    <option  value="1">货到付款</option>
+                                </select>
+                            </th>
+                            <th class="font-normal text-basic td" >
+                                <select  id="payState" >
+                                    <option  value="">全部</option>
+                                    <option  value="2">已支付</option>
+                                    <option  value="1">未支付</option>
+                                </select>
+                            </th>
+                            <th class="font-normal text-basic td" >
+                                <select  id="logisticsState" >
+                                    <option  value="">全部</option>
+                                    <option  value="1">未配送</option>
+                                    <option  value="2">已配送</option>
+                                    <option  value="3">已确认收货</option>
+                                </select>
+                            </th>
+                            <th class="font-normal text-basic td" >
+                                <input type="button" id="magSearch" value="搜索" class="btn btn-primary" >
+                            </th>
+                        </form>
+                    </tr>
+                    </thead>
+                    <tbody class="text-666" id="table-list-content"></tbody>
+                    <script id="table-list-tpl" type="text/html">
+                        {{each dataList as value i}}
+                        <tr>
+                            <td><span>{{i+1}}</span></td>
+                            <td><span class="inline-block text-ellipsis text-basic">{{value.orderNumber}}</span></td>
+                            <td><span class="inline-block text-ellipsis text-basic">{{value.createTime}}</span></td>
+                            <td><span class="inline-block text-ellipsis text-basic">{{value.paidAmount/100}}</span></td>
+                            <td><span class="inline-block text-ellipsis text-basic">{{value.user.phone}}</span></td>
+                            <td><span class="inline-block text-ellipsis text-basic">{{if value.invoiceTag==0}}否 {{else if value.invoiceTag==1}}是{{/if}}</span>
+                            </td>
+                            <td><span class="inline-block text-ellipsis text-basic">{{value.payment.name}}</span></td>
+                            <td><span class="inline-block text-ellipsis text-basic">{{if value.payState==1}}未付款 {{else if value.payState==2}}已付款{{/if}}</span>
+                            </td>
+                            <td><span class="inline-block text-ellipsis text-basic">{{if value.logisticsState==0}}未配送 {{else if value.logisticsState==1}}等待配送{{else if value.logisticsState==2}}已配送{{else if value.logisticsState==3}}已确认收货{{/if}}</span>
+                            </td>
+                            <td></td>
+                        </tr>
+                        {{/each}}
+                    </script>
+                </table>
+                <div id="cloading" class="hide">
+                    <div id="loadmore"></div>
+                </div>
+            </div>
+            <div class="pages fr">
+                <ul id="pagination" class="pagination-container"></ul>
+                <div class="page-sum text-right text-999 text-basic">当前页面总数：<span class="text-333"
+                                                                                  id="page-sum">0</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    jeDate({
+        dateCell:"#createTime_ge",
+        format:"YYYY-MM-DD 00:00:00",
+        isTime:false,
+        minDate:"2017-04-01 00:00:00",
+        maxDate:"2099-11-8 00:00:00"
+    })
+    jeDate({
+        dateCell:"#createTime_le",
+        format:"YYYY-MM-DD 23:59:59",
+        isTime:false,
+        minDate:"2017-04-01 00:00:00",
+        maxDate:"2099-11-8 00:00:00"
+    })
+</script>
+</body>
+</html>
